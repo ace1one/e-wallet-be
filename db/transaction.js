@@ -4,7 +4,7 @@ export async function createTransactionsTable() {
     await sql`
       CREATE TABLE IF NOT EXISTS transactions (
         id SERIAL PRIMARY KEY,
-        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        user_id VARCHAR NOT NULL,
         category_id INTEGER REFERENCES category(id) ON DELETE SET NULL,
         type VARCHAR(10) NOT NULL CHECK (type IN ('income', 'expense')),
         title VARCHAR(255) NOT NULL,
