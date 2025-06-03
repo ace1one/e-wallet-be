@@ -3,6 +3,7 @@
  import fetch from 'node-fetch';
  import { initializeDatabase } from './db/index.js';
  import routes from './routes/index.js';
+ import job from './lib/corn.js';
 
     if (!globalThis.fetch) {
         globalThis.fetch = fetch;
@@ -14,9 +15,8 @@ const PORT = process.env.PORT || 3000;
 const app =  express();
 
 app.use(express.json());
-app.get('/healthcheck', (req, res) => {
-    return res.status(200).json({ status: 'ok' });
-  });
+
+job.start();
 
 app.use('/api', routes);
 
