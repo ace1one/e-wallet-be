@@ -89,7 +89,7 @@ export const getTransactionSummary = async (req, res) => {
 }
 
 export const deleteTransaction = async (req, res) => {
-    const { transactionId, userId } = req.params;
+    const { transactionId, userId } = req.query;
 
     if (!transactionId) {
         return res.status(400).json({ error: 'Missing required field: transactionId' });
