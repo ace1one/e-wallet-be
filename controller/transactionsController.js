@@ -30,9 +30,11 @@ export const getTransactions = async (req, res) => {
 
     try {
         const result = await sql`
-            SELECT * FROM transactions
-            WHERE user_id = ${userId}
-            ORDER BY created_at DESC
+            SELECT t.*, c.name as category 
+            FROM transactions t 
+            JOIN category c ON t.category_id = c.id 
+            WHERE t.user_id = ${userId}
+            ORDER BY t.created_at DESC
         `;
         res.status(200).json(result);
     } catch (error) {
