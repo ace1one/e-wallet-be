@@ -4,6 +4,7 @@
  import { initializeDatabase } from './db/index.js';
  import routes from './routes/index.js';
  import job from './lib/corn.js';
+ import  categorySeeder  from "./routes/category-seeder.js";
 
     if (!globalThis.fetch) {
         globalThis.fetch = fetch;
@@ -18,6 +19,7 @@ app.use(express.json());
 
 job.start();
 
+app.use('/api', categorySeeder);
 app.use('/api', routes);
 
 app.get('/', (req, res) => {
