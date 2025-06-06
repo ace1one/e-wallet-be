@@ -7,7 +7,6 @@ export const createTransaction = async (req, res) => {
     if (!user_id || !category_id || !type || !title || amount === undefined || amount === null) {
         return errorResponse(res,'Missing Fields',400)  //res.status(400).json({ error: 'Missing required fields' });
     }
-
     try {
         const result = await sql`
             INSERT INTO transactions (user_id, category_id,type, title, amount, remarks)
@@ -34,7 +33,7 @@ export const getTransactions = async (req, res) => {
             FROM transactions t 
             JOIN category c ON t.category_id = c.id 
             WHERE t.user_id = ${userId}
-            ORDER BY t.created_at DESC
+            ORDER BY t.id DESC
         `;
         res.status(200).json(result);
     } catch (error) {

@@ -24,7 +24,7 @@ export const createCategory = async (req, res) => {
 
 export const getCategories = async (req, res) => {
     try {
-        const result = await sql`SELECT * FROM category ORDER BY name`;
+        const result = await sql`SELECT * FROM category`;
         return successResponse(res, result, 'Categories fetched successfully');
     } catch (error) {
         console.error('Error fetching categories:', error);
