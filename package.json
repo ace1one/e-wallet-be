@@ -22,7 +22,8 @@
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.2.0",
     "node-cron": "^4.1.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "svix": "^1.67.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
