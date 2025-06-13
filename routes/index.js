@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { clerkMiddleware } from '../middleware/clerkMiddleware.js';
+import  clerkMiddleware  from '../middleware/clerkMiddleware.js';
 import transactionsRoutes from './transactionsRoute.js';
 import categoryRoutes from './categoryRoute.js';
 import groupRoute from './split-bill/groupRoute.js';
 
 const router = Router();
+
 router.use(clerkMiddleware);
 router.use('/transactions', transactionsRoutes);
 router.use('/category', categoryRoutes);
