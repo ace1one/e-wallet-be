@@ -68,8 +68,7 @@ app.use('/api', async (req, res, next) => {
         // Verify token
         const verified = jwt.verify(token, publicKey, {
             algorithms: ['RS256'],
-            issuer: process.env.CLERK_ISSUER,
-            audience: 'your-audience' // Replace with audience from JWT Templates > mobile
+            issuer: process.env.CLERK_ISSUER
         });
 
         req.auth = { userId: verified.sub }; // Attach user ID from token
