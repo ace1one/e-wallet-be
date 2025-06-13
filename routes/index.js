@@ -1,13 +1,14 @@
 import { Router } from 'express';
+import { clerkMiddleware } from '../middleware/clerkMiddleware.js';
 import transactionsRoutes from './transactionsRoute.js';
 import categoryRoutes from './categoryRoute.js';
+import groupRoute from './split-bill/groupRoute.js';
 
 const router = Router();
-// Define the base route for transactions
+router.use(clerkMiddleware);
 router.use('/transactions', transactionsRoutes);
 router.use('/category', categoryRoutes);
-// Add more routes here as needed
-// Example: router.use('/users', usersRouter);
-// Example: router.use('/categories', categoriesRouter);
+router.use('/group',groupRoute)
+
 
 export default router;
