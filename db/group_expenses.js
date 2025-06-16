@@ -7,7 +7,7 @@ export async function createGroupExpensesTable() {
         group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE,
         description TEXT,
         total_amount NUMERIC(10, 2) NOT NULL,
-        paid_by INTEGER REFERENCES users(id),
+        paid_by VARCHAR(255) REFERENCES users(clerk_id),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
