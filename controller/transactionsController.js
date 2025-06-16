@@ -21,7 +21,8 @@ export const createTransaction = async (req, res) => {
 }
 
 export const getTransactions = async (req, res) => {
-    const { userId } = req.query;
+    console.log(req.auth)
+    const { userId } = req.auth;
 
     if (!userId) {
         return res.status(400).json({ error: 'Missing required field: user_id' });
@@ -43,7 +44,8 @@ export const getTransactions = async (req, res) => {
 }
 
 export const getTransactionSummary = async (req, res) => {
-    const { userId } = req.query;
+    console.log('user',req.auth)
+    const { userId } = req.auth;
 
     if (!userId) {
         return res.status(400).json({ error: 'Missing required field: user_id' });
@@ -88,8 +90,8 @@ export const getTransactionSummary = async (req, res) => {
 }
 
 export const deleteTransaction = async (req, res) => {
-    const { transactionId, userId } = req.query;
-    console.log('transactionId:', transactionId, 'userId:', userId);
+    const { transactionId } = req.query;
+    const { userId } = req.auth;
 
     if (!transactionId) {
         return res.status(400).json({ error: 'Missing required field: transactionId' });
