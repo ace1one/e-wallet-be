@@ -37,6 +37,19 @@ export async function createGroup(req, res) {
         await sql`INSERT INTO group_members (group_id, user_id) VALUES ${sql.unsafe(values)}`;
 
   
+
+        const notificationValues = uniqueUserIds
+      .map(
+        (userId) =>
+          `('${userId}', 'GROUP_ADD', 'You were added to group "${name}"', ${group.id})`
+      )
+      .join(", ");
+
+    await sql`
+      INSERT INTO notifications (user_id, type, title, group_id)
+      VALUES ${sql.unsafe(notificationValues)}
+    `;
+
           await sql`COMMIT`;
   
           return successResponse(res, {

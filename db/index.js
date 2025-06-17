@@ -6,6 +6,7 @@ import { createExpenseSplitsTable } from "./expenses_split.js";
 import { createGroupExpensesTable } from "./group_expenses.js";
 import { createGroupMembersTable } from "./group_members.js";
 import { createGroupsTable } from "./groups.js";
+import { createNotificationsTable } from "./notification.js";
 
 export async function initializeDatabase() {
   try {
@@ -17,6 +18,7 @@ export async function initializeDatabase() {
     await createGroupExpensesTable();
     await createExpenseSplitsTable();
     await createSettlementTable();
+    await createNotificationsTable();
     console.log('Database initialized successfully');
   } catch (error) {
     console.error('Error initializing the database:', error);
