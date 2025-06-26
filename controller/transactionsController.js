@@ -21,7 +21,6 @@ export const createTransaction = async (req, res) => {
 }
 
 export const getTransactions = async (req, res) => {
-    console.log(req.auth)
     const { userId } = req.auth;
 
     if (!userId) {

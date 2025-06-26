@@ -4,6 +4,7 @@ import transactionsRoutes from './transactionsRoute.js';
 import categoryRoutes from './categoryRoute.js';
 import groupRoute from './split-bill/groupRoute.js';
 import notifiactionRoute from './notificationRoute.js';
+import userRoute from './usersRoute.js';
 
 const router = Router();
 
@@ -12,6 +13,7 @@ router.use('/transactions', transactionsRoutes);
 router.use('/category', categoryRoutes);
 router.use('/group',groupRoute)
 router.use('/notification',notifiactionRoute)
+router.use('/users',userRoute)
 
 
 export default router;
