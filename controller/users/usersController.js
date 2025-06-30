@@ -8,7 +8,7 @@ export async function users(req, res) {
 
     try {
         const userRows = await sql`
-            SELECT  email,username
+            SELECT  email,username,clerk_id
             FROM users
             WHERE is_active = true
         `;
