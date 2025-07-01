@@ -31,7 +31,7 @@ export const createGroupExpenses = async (req, res) => {
 
     await Promise.all(splitPromises);
 
-    return successResponse(res, 201, "Expense created successfully", { expense });
+    return successResponse(res,{ expense },"Expense created successfully", 201 );
   } catch (error) {
     console.error("Error creating expense:", error);
     return errorResponse(res, 500, "Server error");
