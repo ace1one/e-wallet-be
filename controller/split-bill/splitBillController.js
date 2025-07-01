@@ -1,59 +1,39 @@
-// import { sql } from "../config/db.js"; 
-// import { successResponse,errorResponse } from '../utils/responseUtils.js'
+import { sql } from "../config/db.js"; 
+import { successResponse, errorResponse } from '../utils/responseUtils.js';
 
+export const createGroupExpenses = async (req, res) => {
+  const { userId } = req.auth;
+  const { groupId, title, amount, selectedUsers } = req.body;
 
-// export const createGroup = async (req, res) => {
-//     const { name, type,user_id, members } = req.body;
+  if (!userId) {
+    return errorResponse(res, 401, "Unauthorized");
+  }
 
-//     if (!name || !type || !user_id || !members) {
-//         return errorResponse(res, 'Missing required fields', 400);
-//     }
+  if (!groupId || !title || !amount || !selectedUsers || selectedUsers.length === 0) {
+    return errorResponse(res, 400, "Missing required fields");
+  }
 
-//     try {
-//         const result = await sql`
-//             INSERT INTO group (name,type, user_id,meme)
-//             VALUES (${name}, ${icon}, ${status}, ${description}, ${user_id})
-//             RETURNING *
-//         `;
-//         return successResponse(res, result[0], 'Category created successfully', 201);
-//     } catch (error) {
-//         console.error('Error creating category:', error);
-//         return errorResponse(res, 'Internal Server Error');
-//     }
-// }
+  try {
+    // Insert the expense into the group_expenses table
+    const [expense] = await sql`
+      INSERT INTO group_expenses (group_id, title, total_amount, paid_by)
+      VALUES (${groupId}, ${title}, ${amount}, ${userId})
+      RETURNING *
+    `;
 
-// export const getCategories = async (req, res) => {
-//     try {
-//         const result = await sql`SELECT * FROM category`;
-//         return successResponse(res, result, 'Categories fetched successfully');
-//     } catch (error) {
-//         console.error('Error fetching categories:', error);
-//         return errorResponse(res, 'Internal Server Error');
-//     }
-// }
+    // Insert each user's split using provided amount
+    const splitPromises = selectedUsers.map(({ userId, amount }) =>
+      sql`
+        INSERT INTO expense_splits (expense_id, user_id, amount)
+        VALUES (${expense.id}, ${userId}, ${amount})
+      `
+    );
 
-// export const deleteCategory = async (req, res) => {
-//     const { userId ,id} = req.query;
+    await Promise.all(splitPromises);
 
-//     if (!id) {
-//         return errorResponse(res, 'Category not found', 400);
-//     }
-
-//     try {
-//         const result = await sql`
-//             DELETE FROM category
-//             WHERE user_id = ${userId} AND
-//             id = ${id}
-//             RETURNING *
-//         `;
-        
-//         if (result.length === 0) {
-//             return errorResponse(res, 'Category not found', 404);
-//         }
-
-//         return successResponse(res, result[0], 'Category deleted successfully');
-//     } catch (error) {
-//         console.error('Error deleting category:', error);
-//         return errorResponse(res, 'Internal Server Error');
-//     }
-// }
+    return successResponse(res, 201, "Expense created successfully", { expense });
+  } catch (error) {
+    console.error("Error creating expense:", error);
+    return errorResponse(res, 500, "Server error");
+  }
+};
