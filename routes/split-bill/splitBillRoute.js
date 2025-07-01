@@ -1,5 +1,5 @@
 import express  from 'express';
-import { createGroupExpenses } from '../../controller/split-bill/splitBillController';
+import { createGroupExpenses } from '../../controller/split-bill/splitBillController.js';
 
 
 const groupExpenseRoute = express.Router();

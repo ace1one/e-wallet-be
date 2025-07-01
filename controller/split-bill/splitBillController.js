@@ -1,5 +1,5 @@
-import { sql } from "../config/db.js"; 
-import { successResponse, errorResponse } from '../utils/responseUtils.js';
+import { sql } from "../../config/db.js"; 
+import { successResponse, errorResponse } from '../../utils/responseUtils.js';
 
 export const createGroupExpenses = async (req, res) => {
   const { userId } = req.auth;
