@@ -122,15 +122,15 @@ export async function createGroup(req, res) {
                 name: group.name,
                 type: group.type,
                 members,
-                totalExpense: Number(total),
-                yourBalance: Number(balance),
+                totalExpense: Math.round(Number(total) * 100) / 100,
+                yourBalance: Math.round(balance * 100) / 100,
                 status:
-                    balance > 0
-                        ? `You get ₹${balance}`
-                        : balance < 0
-                        ? `You owe ₹${Math.abs(balance)}`
-                        : `Settled up`
-            });
+                  balance > 0
+                    ? `You get ₹${Math.round(balance * 100) / 100}`
+                    : balance < 0
+                    ? `You owe ₹${Math.abs(Math.round(balance * 100) / 100)}`
+                    : `Settled up`,
+              });
         }
 
         return successResponse(res, groups, "Groups fetched successfully");
